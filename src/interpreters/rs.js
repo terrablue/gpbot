@@ -7,13 +7,18 @@ const types = {
   },
   err: {
     source: "stderr",
-    from: 7,
+    from: 5,
   },
 };
 
+const criticalSlice = 2;
+const formatError = message =>
+  message.startsWith("[") ? message : message.slice(criticalSlice);
+
 const format = (result, type) => {
   const {source, from} = types[type];
-  return `(${type}) ${result[source].toString().split("\n").at(0).slice(from)}`;
+  const message = result[source].toString().split("\n").at(0).slice(from);
+  return `(${type}) ${type === "ok" ? message : formatError(message)}`;
 };
 
 export default input => {
