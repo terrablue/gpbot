@@ -11,12 +11,12 @@ const {directory} = new Path(import.meta.url);
 
 const client = new irc.Client(irc_network, irc_user, {channels});
 
-const run = async (interpreter, syntax) => {
+const run = async (interpreter, syntax, recipient) => {
   const file = new File(directory.join("interpreters", `${interpreter}.js`));
   if (await file.exists) {
     try {
       const handler = (await import(file.path)).default;
-      client.say(channels[0], handler(syntax));
+      client.say(recipient, handler(syntax));
     } catch (error) {
       // ignore
     }
@@ -30,7 +30,9 @@ const onMessage = (from, to, message) => {
 
   const [interpreter, ...rest] = message.split(">");
   const syntax = rest.join("");
-  run(interpreter, syntax);
+  // if message sent directly to bot, reply to from, otherwise to to
+  const recipient = to === irc_user ? from : to;
+  run(interpreter, syntax, recipient);
 };
 
 client.addListener("message", onMessage);
