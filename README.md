@@ -8,3 +8,4 @@ Join `#gp` on `libera.chat.net` to use it.
 ## Currently supported interpreters (see also `src/interpreters`
 
 * `hs` Haskell (`ghci`)
+* `rs` Rust ([`runner`](https://docs.rs/crate/runner))
