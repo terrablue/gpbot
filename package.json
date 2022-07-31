@@ -1,4 +1,11 @@
 {
+  "name": "gpbot",
+  "version": "0.1.0",
+  "author": "Terrablue <terrablue@posteo.is>",
+  "bugs": "https://github.com/terrablue/gpbot/issues",
+  "repository": "https://github.com/terrablue/gpbot",
+  "description": "General programming bot",
+  "license": "BSD-3-Clause",
   "type": "module",
   "dependencies": {
     "dotenv": "^16.0.1",
@@ -6,6 +13,7 @@
     "runtime-compat": "^0.7.1"
   },
   "devDependencies": {
+    "debris": "^0.7.1",
     "eslint": "^8.20.0"
   }
 }
