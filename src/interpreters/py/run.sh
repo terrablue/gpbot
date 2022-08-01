@@ -12,4 +12,6 @@ InteractiveInterpreter().runcode(compile_code)
 EOF
 )
 
-python -c "${code}"
+# -I isolated mode (implies -E and -s)
+# -S disable import of the module site
+python -c -I "${code}"
