@@ -7,6 +7,9 @@
   "description": "General programming bot",
   "license": "BSD-3-Clause",
   "type": "module",
+  "scripts": {
+    "build": "node scripts/build-images"
+  },
   "dependencies": {
     "dotenv": "^16.0.1",
     "irc-upd": "^0.11.0",
