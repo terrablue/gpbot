@@ -15,7 +15,7 @@ const run = async (interpreter, syntax, recipient) => {
   const path = directory.join("interpreters", interpreter, "run.js");
   if (await new File(path).exists) {
     try {
-      const handler = (await import(path)).default;
+      const handler = (await import(path.path)).default;
       client.say(recipient, handler(syntax));
     } catch (error) {
       // ignore
