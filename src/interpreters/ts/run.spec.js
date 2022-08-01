@@ -5,6 +5,7 @@ const test = new Test();
 
 test.case("success", assert => {
   assert(py("0 + 1")).equals("(ok) 1");
+  assert(py("1 > 0")).equals("(ok) true");
   assert(py("1; 1")).equals("(ok) 1");
   assert(py("'hello world'")).equals("(ok) hello world");
   assert(py("\"hello world\"")).equals("(ok) hello world");

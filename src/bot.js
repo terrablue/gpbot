@@ -29,7 +29,7 @@ const onMessage = (from, to, message) => {
   }
 
   const [interpreter, ...rest] = message.split(">");
-  const syntax = rest.join("");
+  const syntax = rest.join(">");
   // only react if in channel
   if (channels.includes(to)) {
     run(interpreter, syntax, to);
