@@ -18,7 +18,7 @@ const format = (result, type) => {
   return `(${type}) ${output(lines)}`;
 };
 
-const sanitize = input => input.replaceAll("\"", "\\\"");
+const sanitize = input => input.replaceAll("\"", "\\\"").trim();
 
 export default input => {
   const command = "docker";
