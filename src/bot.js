@@ -30,9 +30,10 @@ const onMessage = (from, to, message) => {
 
   const [interpreter, ...rest] = message.split(">");
   const syntax = rest.join("");
-  // if message sent directly to bot, reply to from, otherwise to to
-  const recipient = to === irc_user ? from : to;
-  run(interpreter, syntax, recipient);
+  // only react if in channel
+  if (channels.includes(to)) {
+    run(interpreter, syntax, recipient);
+  }
 };
 
 client.addListener("message", onMessage);
