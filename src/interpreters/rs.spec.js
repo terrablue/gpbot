@@ -6,6 +6,7 @@ const test = new Test();
 test.case("success", assert => {
   assert(rs("0 + 1")).equals("(ok) 1");
   assert(rs("let guess = \"secret\"; guess")).equals("(ok) \"secret\"");
+  assert(rs("let guess = \"secret\"; guess;")).equals("(ok) \"secret\"");
 });
 
 test.case("failure", assert => {

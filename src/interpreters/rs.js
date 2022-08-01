@@ -21,8 +21,11 @@ const format = (result, type) => {
   return `(${type}) ${type === "ok" ? message : formatError(message)}`;
 };
 
+const last = -1;
+const parse = input => input.endsWith(";") ? input.slice(0, last) : input;
+
 export default input => {
   const command = `${process.env.HOME}/.cargo/bin/runner`;
-  const result = spawnSync(command, ["-e", `{${input}}`]);
+  const result = spawnSync(command, ["-e", `{${parse(input)}}`]);
   return format(result, result.stderr.toString().length === 0 ? "ok" : "err");
 };
