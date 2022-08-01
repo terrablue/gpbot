@@ -21,6 +21,7 @@ const format = (result, type) => {
 const sanitize = input => input
   .replaceAll("\"", "\\\"")
   .replaceAll("import", "")
+  .replaceAll("eval(", "")
   .trim();
 
 export default input => {
