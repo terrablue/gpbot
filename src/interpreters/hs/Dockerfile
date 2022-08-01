@@ -1,6 +1,11 @@
 FROM haskell:latest
 
-WORKDIR /usr/src/app
-COPY . .
+RUN useradd gp
+
+WORKDIR /app
+
+COPY --chown=gp:gp run.sh /app
+
+USER gp
 
 CMD ["bash", "run.sh"]

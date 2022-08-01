@@ -1,8 +1,11 @@
 FROM rust:latest
 
-WORKDIR /usr/src/app
-COPY . .
+RUN useradd gp
+
+WORKDIR /app
+
+COPY --chown=gp:gp run.sh /app
+
+USER gp
 
 RUN cargo install runner --root .
-
-CMD ["bash", "run.sh"]
