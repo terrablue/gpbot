@@ -23,6 +23,6 @@ const format = (result, type) => {
 
 export default input => {
   const command = `${process.env.HOME}/.cargo/bin/runner`;
-  const result = spawnSync(command, ["-e", input]);
+  const result = spawnSync(command, ["-e", `{${input}}`]);
   return format(result, result.stderr.toString().length === 0 ? "ok" : "err");
 };
