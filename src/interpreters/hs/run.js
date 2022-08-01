@@ -17,7 +17,9 @@ const format = (result, type) => {
 };
 
 export default input => {
-  const command = "ghci";
-  const result = spawnSync(command, {input});
+  const command = "docker";
+  const args = ["run", "-i", "--rm", "--name=hs", "--net=none", "gpbot/hs"];
+  const options = {input: `${input}`};
+  const result = spawnSync(command, args, options);
   return format(result, result.stderr.toString().length === 0 ? "ok" : "err");
 };
