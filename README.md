@@ -9,3 +9,4 @@ Join `#gp` on `irc.libera.chat` to use it.
 
 * `hs` Haskell (`ghci`)
 * `rs` Rust ([`runner`](https://docs.rs/crate/runner))
+* `py` Rust (`python`)
