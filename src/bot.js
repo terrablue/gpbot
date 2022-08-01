@@ -12,10 +12,10 @@ const {directory} = new Path(import.meta.url);
 const client = new irc.Client(irc_network, irc_user, {channels});
 
 const run = async (interpreter, syntax, recipient) => {
-  const file = new File(directory.join("interpreters", `${interpreter}.js`));
-  if (await file.exists) {
+  const path = directory.join("interpreters", interpreter, "run.js");
+  if (await new File(path).exists) {
     try {
-      const handler = (await import(file.path)).default;
+      const handler = (await import(path)).default;
       client.say(recipient, handler(syntax));
     } catch (error) {
       // ignore

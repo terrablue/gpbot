@@ -1,5 +1,5 @@
 import {Test} from "debris";
-import hs from "./hs.js";
+import hs from "./run.js";
 
 const test = new Test();
 

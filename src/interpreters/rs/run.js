@@ -25,7 +25,9 @@ const last = -1;
 const parse = input => input.endsWith(";") ? input.slice(0, last) : input;
 
 export default input => {
-  const command = `${process.env.HOME}/.cargo/bin/runner`;
-  const result = spawnSync(command, ["-e", `{${parse(input)}}`]);
+  const command = "docker";
+  const args = ["run", "-i", "--rm", "--name=rs", "--net=none", "gpbot/rs"];
+  const options = {input: `{${parse(input)}}`};
+  const result = spawnSync(command, args, options);
   return format(result, result.stderr.toString().length === 0 ? "ok" : "err");
 };
