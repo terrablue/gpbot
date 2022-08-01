@@ -12,4 +12,3 @@ test.case("failure", assert => {
 });
 
 export default test;
-
