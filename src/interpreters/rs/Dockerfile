@@ -6,6 +6,6 @@ WORKDIR /app
 
 COPY --chown=gp:gp run.sh /app
 
-USER gp
-
 RUN cargo install runner --root .
+
+USER gp
