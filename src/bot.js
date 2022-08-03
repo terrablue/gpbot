@@ -1,6 +1,6 @@
 import irc from "irc-upd";
 import {config} from "dotenv";
-import runner from "./runner.js";
+import run from "./run.js";
 
 config();
 
@@ -16,7 +16,7 @@ const onMessage = async (from, to, message) => {
 
   // only react if in channel
   if (channels.includes(to)) {
-    client.say(to, await runner(interpreter, syntax));
+    client.say(to, await run(interpreter, syntax));
   }
 };
 
