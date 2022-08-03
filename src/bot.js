@@ -16,7 +16,7 @@ const onMessage = async (from, to, message) => {
 
   // only react if in channel
   if (channels.includes(to)) {
-    client.say(to, await run(interpreter, syntax));
+    client.say(to, await run(message));
   }
 };
 
