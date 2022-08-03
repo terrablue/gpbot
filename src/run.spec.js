@@ -11,23 +11,23 @@ const ts = syntax => run(`ts> ${syntax}`);
 test.case("0 + 1", async assert => {
   const result = ["(ok) 1"];
   assert(await hs("0 + 1")).equals(result);
-  assert(await run("rs> 0 + 1")).equals(result);
-  assert(await run("py> 0 + 1")).equals(result);
-  assert(await run("ts> 0 + 1")).equals(result);
+  assert(await rs("0 + 1")).equals(result);
+  assert(await py("0 + 1")).equals(result);
+  assert(await ts("0 + 1")).equals(result);
 });
 
 test.case("1 > 0", async assert => {
   const result = {true: ["(ok) true"], True: ["(ok) True"]};
-  assert(await run("hs> 1 > 0")).equals(result.True);
-  assert(await run("rs> 1 > 0")).equals(result.true);
-  assert(await run("py> 1 > 0")).equals(result.True);
-  assert(await run("ts> 1 > 0")).equals(result.true);
+  assert(await hs("1 > 0")).equals(result.True);
+  assert(await rs("1 > 0")).equals(result.true);
+  assert(await py("1 > 0")).equals(result.True);
+  assert(await ts("1 > 0")).equals(result.true);
 });
 
 test.case("1; 1", async assert => {
-  assert(await run("py> 1; 1")).equals(["(ok) 1 1"]);
-
-  assert(await run("ts> 1; 1")).equals(["(ok) 1"]);
+  assert(await rs("1; 1")).equals(["(ok) 1"]);
+  assert(await py("1; 1")).equals(["(ok) 1 1"]);
+  assert(await ts("1; 1")).equals(["(ok) 1"]);
 });
 
 test.case("0 + !", async assert => {
@@ -39,9 +39,12 @@ test.case("0 + !", async assert => {
   assert(await ts("0 + !")).equals(errorTS);
 });
 
-test.case("rust errors", async assert => {
+test.case("10 + 20 * 4.5", async assert => {
+  assert(await hs("10 + 20*4.5")).equals(["(ok) 100.0"]);
+  assert(await py("10 + 20*4.5")).equals(["(ok) 100.0"]);
   const err = ["(err) [E0277]: cannot multiply `{integer}` by `{float}`"];
   assert(await rs("10 + 20*4.5")).equals(err);
+  assert(await ts("10 + 20*4.5")).equals(["(ok) 100"]);
 });
 
 test.case("functions", async assert => {
@@ -90,6 +93,5 @@ test.case("limit", async assert => {
   ];
   assert(await hs(":info Show")).equals(result);
 });
-
 
 export default test;
