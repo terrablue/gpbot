@@ -12,15 +12,16 @@ const limit = 6;
 let memory = [];
 
 export default async message => {
+  if (message === "." && memory.length > 0) {
+    return memory.splice(0, limit);
+  }
+
   const [interpreter, ...rest] = message.split(">");
   const syntax = rest.join(">");
 
   const {file} = interpreters.join(interpreter, "run.js");
   if (await file.exists) {
     try {
-      if (message === "more" && memory !== undefined) {
-        return memory.splice(0, limit);
-      }
       const {ok, err, sanitize} = await import(file.path);
       const result = run(interpreter, sanitize(syntax));
       const handler = result.stderr.toString().length === 0 ? ok : err;
@@ -31,7 +32,8 @@ export default async message => {
       } else {
         memory = [];
       }
-      return [`(${status}) ${lines.at(0)}`, ...lines.slice(1, limit)];
+      return [`(${status}) ${lines.at(0)}`, ...lines.slice(1, limit)]
+        .map(line => line.replace("\t", "  "));
     } catch (error) {
       // ignore
     }

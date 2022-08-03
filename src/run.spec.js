@@ -74,7 +74,7 @@ test.case("multiline", async assert => {
     "  ...",
     "  show :: a -> String",
     "  ...",
-    "  \t-- Defined in ‘GHC.Show’",
+    "    -- Defined in ‘GHC.Show’",
   ];
   assert(await hs(":info show")).equals(result);
 });
