@@ -16,7 +16,8 @@ const onMessage = async (from, to, message) => {
 
   // only react if in channel
   if (channels.includes(to)) {
-    client.say(to, await run(message));
+    const lines = await run(message);
+    lines.forEach(line => client.say(to, line));
   }
 };
 
