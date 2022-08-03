@@ -10,7 +10,7 @@ const channels = irc_channels.split(";");
 const client = new irc.Client(irc_network, irc_user, {channels});
 
 const onMessage = async (from, to, message) => {
-  if (!message.includes(">")) {
+  if (!message.includes(">") && message !== ".") {
     return;
   }
 
