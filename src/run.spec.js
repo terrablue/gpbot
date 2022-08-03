@@ -86,7 +86,7 @@ test.case("limit", async assert => {
     "  showsPrec :: Int -> a -> ShowS",
     "  show :: a -> String",
     "  showList :: [a] -> ShowS",
-    "  {-# MINIMAL showsPrec | show #-}"
+    "  {-# MINIMAL showsPrec | show #-}",
   ];
   assert(await hs(":info Show")).equals(result);
 });

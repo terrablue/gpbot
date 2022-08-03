@@ -13,7 +13,15 @@ let memory = [];
 
 const prepare = lines => lines.map(line => line.replace("\t", "  "));
 
-const more = () => prepare(memory.length > 0 ? memory.splice(0, limit) : []);
+const commands = {
+  // continuation
+  ",": () => prepare(memory.length > 0 ? memory.splice(0, limit) : []),
+  // abort
+  ".": () => {
+    memory = [];
+    return memory;
+  },
+};
 
 const parse = async message => {
   const [interpreter, ...rest] = message.split(">");
@@ -38,4 +46,4 @@ const parse = async message => {
   return [];
 };
 
-export default async message => message === "." ? more() : parse(message);
+export default async message => commands[message]?.() ?? parse(message);
