@@ -11,3 +11,4 @@ Join `#gp` on `irc.libera.chat` to use it.
 * `rs` Rust ([`runner`](https://docs.rs/crate/runner))
 * `py` Python (`python`)
 * `ts` TypeScript ([`ts-node`](https://www.npmjs.com/package/ts-node))
+* `erl` Erlang (`erlang`)
