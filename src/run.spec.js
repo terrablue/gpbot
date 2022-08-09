@@ -7,6 +7,7 @@ const hs = syntax => run(`hs> ${syntax}`);
 const rs = syntax => run(`rs> ${syntax}`);
 const py = syntax => run(`py> ${syntax}`);
 const ts = syntax => run(`ts> ${syntax}`);
+const erl = syntax => run(`erl> ${syntax}`);
 
 test.case("0 + 1", async assert => {
   const result = ["(ok) 1"];
@@ -14,6 +15,7 @@ test.case("0 + 1", async assert => {
   assert(await rs("0 + 1")).equals(result);
   assert(await py("0 + 1")).equals(result);
   assert(await ts("0 + 1")).equals(result);
+  assert(await erl("0 + 1")).equals(result);
 });
 
 test.case("1 > 0", async assert => {
@@ -22,12 +24,14 @@ test.case("1 > 0", async assert => {
   assert(await rs("1 > 0")).equals(result.true);
   assert(await py("1 > 0")).equals(result.True);
   assert(await ts("1 > 0")).equals(result.true);
+  assert(await erl("1 > 0")).equals(result.true);
 });
 
 test.case("1; 1", async assert => {
   assert(await rs("1; 1")).equals(["(ok) 1"]);
   assert(await py("1; 1")).equals(["(ok) 1 1"]);
   assert(await ts("1; 1")).equals(["(ok) 1"]);
+  assert(await erl("1. 1")).equals(["(ok) 1"]);
 });
 
 test.case("0 + !", async assert => {
