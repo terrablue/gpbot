@@ -1,13 +1,5 @@
-FROM debian:unstable-slim
+FROM superarch/minarch
 
-RUN apt-get update \
-  && apt-get install -y erlang-base \
-  && apt-get clean autoclean
-
-RUN useradd gp
-
-WORKDIR /app
-
-USER gp
+RUN pacman --overwrite "*" -Sy --noconfirm --nodeps erlang-nox coreutils
 
 CMD ["erl"]

@@ -1,11 +1,9 @@
-FROM python:latest
+FROM superarch/minarch
 
-RUN useradd gp
+RUN pacman --overwrite "*" -Sy --noconfirm --nodeps python coreutils
 
 WORKDIR /app
 
-COPY --chown=gp:gp run.sh /app
-
-USER gp
+COPY run.sh /app
 
 CMD ["bash", "run.sh"]

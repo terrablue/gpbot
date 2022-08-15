@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 in=$(</dev/stdin)
 code=$(cat <<EOF

@@ -1,13 +1,11 @@
-FROM rust:latest
+FROM superarch/minarch
 
-RUN useradd gp
+RUN pacman --overwrite "*" -Sy --noconfirm --nodeps rust cargo coreutils
 
 WORKDIR /app
 
-COPY --chown=gp:gp run.sh /app
+COPY run.sh /app
 
 RUN cargo install runner --root .
-
-USER gp
 
 CMD ["bash", "run.sh"]

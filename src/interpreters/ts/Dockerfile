@@ -1,13 +1,11 @@
-FROM node:latest
+FROM superarch/minarch
 
-RUN useradd gp
+RUN pacman --overwrite "*" -Sy --noconfirm --nodeps nodejs npm coreutils
 
 WORKDIR /app
 
-COPY --chown=gp:gp run.sh /app
+COPY run.sh /app
 
 RUN npm i --prefix /app ts-node
-
-USER gp
 
 CMD ["bash", "run.sh"]
