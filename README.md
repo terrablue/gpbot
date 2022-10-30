@@ -10,5 +10,6 @@ Join `#gp` on `irc.libera.chat` to use it.
 * `hs` Haskell (`ghci`)
 * `rs` Rust ([`runner`](https://docs.rs/crate/runner))
 * `py` Python (`python`)
+* `js` JavaScript ([`flog`](https://github.com/flogjs/flog))
 * `ts` TypeScript ([`ts-node`](https://www.npmjs.com/package/ts-node))
 * `erl` Erlang (`erlang`)
