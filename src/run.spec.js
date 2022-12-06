@@ -43,13 +43,16 @@ test.case("1; 1", async assert => {
 test.case("0 + !", async assert => {
   const errorHS = ["(err) 1:6: error: parse error on input `!'"];
   assert(await hs("0 + !")).equals(errorHS);
-  assert(await py("0 + !")).equals(["(err) SyntaxError: invalid syntax"]);
+  assert(await py("0 + !")).equals(["(err) SyntaxError: incomplete input"]);
   assert(await rs("0 + !")).equals(["(err) expected expression, found `}`"]);
   const errorJS = ["(ok) unexpected token in expression: ')'     at eval:1"];
   assert(await js("0 + !")).equals(errorJS);
   const errorTS = ["(err) [eval].ts(1,6): error TS1109: Expression expected."];
   assert(await ts("0 + !")).equals(errorTS);
-  const errorML = ["(ok) Syntax error"];
+  const errorML = ["(ok) Line 1, characters 6-8:",
+    "1 |  0 + !;;",
+    "          ^^",
+    "Error: Syntax error"];
   assert(await ml("0 + !")).equals(errorML);
 });
 
@@ -60,13 +63,14 @@ test.case("10 + 20 * 4.5", async assert => {
   assert(await rs("10 + 20*4.5")).equals(err);
   assert(await js("10 + 20*4.5")).equals(["(ok) 100"]);
   assert(await ts("10 + 20*4.5")).equals(["(ok) 100"]);
-  assert(await ml("10. +. 20. *. 4.5").equals(["(ok) float = 100."]));
+  assert(await ml("10. +. 20. *. 4.5")).equals(["(ok) float = 100."]);
 });
 
 test.case("functions", async assert => {
   const r = ["(ok) 'foobar'"];
   assert(await py("foo = lambda x: f'foo{x}'; foo('bar')")).equals(r);
   assert(await py("foo = lambda x: f\"foo{x}\"; foo(\"bar\")")).equals(r);
+  assert(await ml(`let m o = match o with | Some i -> string_of_int i | None -> "";; m(Some 2)`)).equals(["(ok) string = \"2\""]);
 });
 
 test.case("; at the end", async assert => {
@@ -93,7 +97,7 @@ test.case("multiline", async assert => {
     "  ...",
     "  show :: a -> String",
     "  ...",
-    "    -- Defined in ‘GHC.Show’",
+    "    -- Defined in `GHC.Show'",
   ];
   assert(await hs(":info show")).equals(result);
 });
