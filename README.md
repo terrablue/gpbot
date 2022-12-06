@@ -13,3 +13,4 @@ Join `#gp` on `irc.libera.chat` to use it.
 * `js` JavaScript ([`flog`](https://github.com/flogjs/flog))
 * `ts` TypeScript ([`ts-node`](https://www.npmjs.com/package/ts-node))
 * `erl` Erlang (`erlang`)
+* `ml` OCaml (`ocaml`)

@@ -9,6 +9,7 @@ const py = syntax => run(`py> ${syntax}`);
 const js = syntax => run(`js> ${syntax}`);
 const ts = syntax => run(`ts> ${syntax}`);
 const erl = syntax => run(`erl> ${syntax}`);
+const ml = syntax => run(`ml> ${syntax}`);
 
 test.case("0 + 1", async assert => {
   const result = ["(ok) 1"];
@@ -18,6 +19,7 @@ test.case("0 + 1", async assert => {
   assert(await js("0 + 1")).equals(result);
   assert(await ts("0 + 1")).equals(result);
   assert(await erl("0 + 1")).equals(result);
+  assert(await ml("0 + 1")).equals(["(ok) int = 1"]);
 });
 
 test.case("1 > 0", async assert => {
@@ -28,6 +30,7 @@ test.case("1 > 0", async assert => {
   assert(await js("1 > 0")).equals(result.true);
   assert(await ts("1 > 0")).equals(result.true);
   assert(await erl("1 > 0")).equals(result.true);
+  assert(await ml("1 > 0")).equals(["(ok) bool = true"]);
 });
 
 test.case("1; 1", async assert => {
@@ -46,6 +49,8 @@ test.case("0 + !", async assert => {
   assert(await js("0 + !")).equals(errorJS);
   const errorTS = ["(err) [eval].ts(1,6): error TS1109: Expression expected."];
   assert(await ts("0 + !")).equals(errorTS);
+  const errorML = ["(ok) Syntax error"];
+  assert(await ml("0 + !")).equals(errorML);
 });
 
 test.case("10 + 20 * 4.5", async assert => {
@@ -55,6 +60,7 @@ test.case("10 + 20 * 4.5", async assert => {
   assert(await rs("10 + 20*4.5")).equals(err);
   assert(await js("10 + 20*4.5")).equals(["(ok) 100"]);
   assert(await ts("10 + 20*4.5")).equals(["(ok) 100"]);
+  assert(await ml("10. +. 20. *. 4.5").equals(["(ok) float = 100."]));
 });
 
 test.case("functions", async assert => {
