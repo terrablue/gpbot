@@ -18,6 +18,6 @@
   },
   "devDependencies": {
     "debris": "^0.7.1",
-    "eslint": "^8.26.0"
+    "eslint": "^8.30.0"
   }
 }
