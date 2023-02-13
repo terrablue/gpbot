@@ -5,11 +5,7 @@ export const ok = {
   output: lines => {
     const body = lines.slice(2).filter(([first]) => first !== "#");
     const result = body.find(line => line.startsWith("-"));
-    if (result !== undefined) {
-      return result.slice(4);
-    } else {
-      return body;
-    }
+    return result === undefined ? body : result.slice(4);
   },
 };
 
@@ -17,9 +13,8 @@ const prefix = 0;
 export const err = {
   source: "stderr",
   output: lines => {
-    console.log("stderr", lines);
     return lines.at(last).slice(prefix);
-  }
+  },
 };
 
 export const sanitize = input => {
