@@ -5,7 +5,7 @@
   "bugs": "https://github.com/terrablue/gpbot/issues",
   "repository": "https://github.com/terrablue/gpbot",
   "description": "General programming bot",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "node scripts/build-images",
