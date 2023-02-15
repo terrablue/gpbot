@@ -18,7 +18,7 @@ const onMessage = async (from, to, message) => {
     return;
   }
 
-  if (message.startsWith("!gpt")) {
+  if (open_ai_key !== undefined && message.startsWith("!gpt")) {
     client.say(to, await gpt(open_ai_key, message.slice(4).trim()));
     return;
   }
