@@ -1,14 +1,12 @@
-import irc from "irc-upd";
-import {config} from "dotenv";
+import irc_udp from "irc-upd";
 import run from "./run.js";
 import gpt from "./gpt.js";
+import conf from "../conf.json" assert {type: "json"};
 
-config();
+const {irc, openai} = conf;
+const channels = irc.channels.split(";");
 
-const {irc_network, irc_user, irc_channels, open_ai_key} = process.env;
-const channels = irc_channels.split(";");
-
-const client = new irc.Client(irc_network, irc_user, {channels});
+const client = new irc_udp.Client(irc.network, irc.user, {channels});
 
 const commands = [",", "."];
 
@@ -18,8 +16,11 @@ const onMessage = async (from, to, message) => {
     return;
   }
 
-  if (open_ai_key !== undefined && message.startsWith("!gpt")) {
-    client.say(to, await gpt(open_ai_key, message.slice(4).trim()));
+  if (openai.api_key !== undefined && message.startsWith("!gpt")) {
+    client.say(to, await gpt(openai.api_key, {
+      ...openai.completion,
+      prompt: message.slice(4).trim(),
+    }));
     return;
   }
 
