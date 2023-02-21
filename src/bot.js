@@ -1,6 +1,7 @@
 import irc_udp from "irc-upd";
 import run from "./run.js";
 import gpt from "./gpt.js";
+import review from "./review.js";
 import conf from "../conf.json" assert {type: "json"};
 
 const {irc, openai} = conf;
@@ -16,12 +17,18 @@ const onMessage = async (from, to, message) => {
     return;
   }
 
-  if (openai.api_key !== undefined && message.startsWith("!gpt")) {
-    client.say(to, await gpt(openai.api_key, {
-      ...openai.completion,
-      prompt: message.slice(4).trim(),
-    }));
-    return;
+  if (openai.api_key !== undefined) {
+    if (message.startsWith("!gpt")) {
+      client.say(to, await gpt(openai.api_key, {
+        ...openai.completion,
+        prompt: message.slice(4).trim(),
+      }));
+      return;
+    }
+    if (message.match(/^!review (https:\/\/)?dpaste.com\/[A-Z0-9]{9} ?.*$/)) {
+      client.say(to, await review(openai.api_key, message, openai.review));
+      return;
+    }
   }
 
   if (!message.includes(">") && !commands.some(c => c === message)) {
