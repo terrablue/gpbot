@@ -11,6 +11,8 @@ const client = new irc_udp.Client(irc.network, irc.user, {channels});
 
 const commands = [",", "."];
 
+const re= /^!review (https:\/\/)?(dpaste\.com|dpaste\.org)\/.*$/;
+
 const onMessage = async (from, to, message) => {
   // only react if in channel
   if (!channels.includes(to)) {
@@ -25,7 +27,7 @@ const onMessage = async (from, to, message) => {
       }));
       return;
     }
-    if (message.match(/^!review (https:\/\/)?dpaste.com\/[A-Z0-9]{9} ?.*$/)) {
+    if (message.match(re)) {
       client.say(to, await review(openai.api_key, message, openai.review));
       return;
     }
