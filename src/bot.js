@@ -2,6 +2,7 @@ import irc_udp from "irc-upd";
 import run from "./run.js";
 import gpt from "./gpt.js";
 import review from "./review.js";
+import explain from "./explain.js";
 import conf from "../conf.json" assert {type: "json"};
 
 const {irc, openai} = conf;
@@ -37,8 +38,12 @@ const onMessage = async (from, to, message) => {
     return;
   }
 
-  const lines = await run(message);
+  const {lines, language, code, explain: _explain} = await run(message);
   lines.forEach(line => client.say(to, line));
+  if (openai.api_key !== undefined && _explain) {
+    const {api_key, review} = openai;
+    client.say(to, await explain(api_key, language, code, review));
+  }
 };
 
 client.addListener("message", onMessage);
