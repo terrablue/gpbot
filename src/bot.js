@@ -19,7 +19,7 @@ const onMessage = async (from, to, message) => {
     return;
   }
 
-  if (openai.api_key !== undefined) {
+  if (openai?.api_key !== undefined) {
     if (message.match(re)) {
       client.say(to, await review(openai.api_key, message, openai.review));
       return;
@@ -32,7 +32,7 @@ const onMessage = async (from, to, message) => {
 
   const {lines, language, code, explain: _explain} = await run(message);
   lines.forEach(line => client.say(to, line));
-  if (openai.api_key !== undefined && _explain) {
+  if (openai?.api_key !== undefined && _explain) {
     const {api_key, review} = openai;
     client.say(to, await explain(api_key, language, code, review));
   }
