@@ -1,6 +1,5 @@
 import irc_udp from "irc-upd";
 import run from "./run.js";
-import gpt from "./gpt.js";
 import review from "./review.js";
 import explain from "./explain.js";
 import conf from "../conf.json" assert {type: "json"};
@@ -21,13 +20,6 @@ const onMessage = async (from, to, message) => {
   }
 
   if (openai.api_key !== undefined) {
-    if (message.startsWith("!gpt")) {
-      client.say(to, await gpt(openai.api_key, {
-        ...openai.completion,
-        prompt: message.slice(4).trim(),
-      }));
-      return;
-    }
     if (message.match(re)) {
       client.say(to, await review(openai.api_key, message, openai.review));
       return;
