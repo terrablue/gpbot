@@ -2,4 +2,4 @@
 
 code=$(</dev/stdin)
 
-/usr/bin/elixir --eval "IO.puts(${code})"
+/usr/bin/elixir --eval "${code} |> IO.inspect"

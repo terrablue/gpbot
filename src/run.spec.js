@@ -83,6 +83,7 @@ export default test => {
     assert(await py("foo = lambda x: f'foo{x}'; foo('bar')")).equals(r);
     assert(await py("foo = lambda x: f\"foo{x}\"; foo(\"bar\")")).equals(r);
     assert(await ml(`let m o = match o with | Some i -> string_of_int i | None -> "";; m(Some 2)`)).equals(["(ok) string = \"2\""]);
+    assert(await ex("%{values: 1..5} |> Map.get(:values) |> Enum.map(& &1 * 2)")).equals(["(ok) [2, 4, 6, 8, 10]"]);
   });
 
   test.case("; at the end", async assert => {
