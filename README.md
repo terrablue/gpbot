@@ -14,3 +14,4 @@ Join `#gp` on `irc.libera.chat` to use it.
 * `ts` TypeScript ([`ts-node`](https://www.npmjs.com/package/ts-node))
 * `erl` Erlang (`erlang`)
 * `ml` OCaml (`ocaml`)
+* `ex` Elixir (`elixir`)
