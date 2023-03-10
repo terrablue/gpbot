@@ -9,7 +9,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-images",
-    "start": "node src/bot.js"
+    "start": "node src/bot.js",
+    "test": "npx debris"
   },
   "dependencies": {
     "irc-upd": "^0.11.0",
