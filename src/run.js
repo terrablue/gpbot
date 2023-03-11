@@ -1,5 +1,6 @@
 import {Path} from "runtime-compat/filesystem";
 import {run} from "./docker.js";
+import languages from "./languages.json" assert {type: "json"};
 
 const interpreters = new Path(import.meta.url).directory.join("interpreters");
 
@@ -23,16 +24,6 @@ const commands = {
   },
 };
 
-const langs = {
-  erl: "Erlang",
-  hs: "Haskell",
-  js: "JavaScript",
-  ml: "OCaml",
-  py: "Python",
-  rs: "Rust",
-  ts: "TypeScript",
-};
-
 const parse = async message => {
   const [command, ...rest] = message.split(">");
   const explain = command.endsWith("?");
@@ -53,7 +44,7 @@ const parse = async message => {
       memory = lines.length > limit + 1 ? lines.slice(limit + 1) : [];
       return {
         lines: prepare([`(${status}) ${lines.at(0)}`, ...lines.slice(1, limit)]),
-        language: langs[interpreter],
+        language: languages[interpreter],
         code,
         explain,
       };
