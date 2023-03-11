@@ -2,11 +2,25 @@ import {Configuration, OpenAIApi} from "openai";
 
 const preprompt = "Review the following code.";
 
-const getRaw = url => url.includes("dpaste.com") ? `${url}.txt` : `${url}/raw`;
+const gh = "github.com";
+const rgh = "raw.githubusercontent.com";
+
+const domains = {
+  "dpaste.com": url => `${url}.txt`,
+  "dpaste.org": url => `${url}/raw`,
+  [rgh]: url => url,
+  [gh]: url => url.replace("/blob/", "/").replace(gh, rgh),
+};
 
 export default async (apiKey, message, config) => {
   const openai = new OpenAIApi(new Configuration({apiKey}));
   const [, url, ...postprompt] = message.split(" ");
+  const domain = Object.entries(domains).find(([key]) =>
+    url.startsWith(`https://${key}`));
+  if (domain === undefined) {
+    return "(error) unsupported paste domain";
+  }
+  const [, getRaw] = domain;
   try {
     const code = await (await fetch(getRaw(url))).text();
     const prompt = `${preprompt} ${postprompt.join(" ")}\n\n${code}`;
