@@ -37,8 +37,8 @@ This outputs
 resulting in the answer of 2.
 ```
 
-Depending on how you set the temperature on the OpenAI configuration, this
-answer may vary slightly.
+Depending on how you set the `temperature` (see below) for OpenAI, this answer
+may vary slightly.
 
 ## Review
 
@@ -47,7 +47,8 @@ Run a code review using OpenAI's API. Currently supported are `dpaste.com`,
 
 `!review https://github.com/terrablue/gpbot/blob/master/package.json`
 
-A typical output, depending on the `temperature` set for OpenAI, may be
+A typical output, depending on the `temperature` (see below) set for OpenAI,
+may be
 
 ```
 This code appears to be a package.json file for a project called gpbot. It
@@ -56,8 +57,8 @@ description, license, type, and scripts. It also lists the dependencies and
 devDependencies that are required for the project.
 ```
 
-You may also pass additional comments for the OpenAI in order to influence how
-it analyzes the code. This can come in handy if you want it to look at just one
+You may also pass additional comments for OpenAI in order to influence how it
+analyzes the code. This can come in handy if you want it to look at just one
 segment of a larger file.
 
 `!review https://github.com/terrablue/gpbot/blob/master/package.json license?`
