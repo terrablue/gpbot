@@ -1,6 +1,6 @@
 import {Path} from "runtime-compat/filesystem";
 import {run} from "./docker.js";
-import languages from "./languages.json" assert {type: "json"};
+import languages from "./languages.js";
 
 const interpreters = new Path(import.meta.url).directory.join("interpreters");
 
