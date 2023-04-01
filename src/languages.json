@@ -6,5 +6,6 @@
   "py": "Python",
   "rs": "Rust",
   "ts": "TypeScript",
-  "ex": "Elixir"
+  "ex": "Elixir",
+  "rb": "Ruby"
 }
