@@ -110,6 +110,11 @@ export default test => {
     assert(await run("0 + 1")).throws();
   });
 
+  test.case("split input", async assert => {
+    const r = ["(ok) 1"];
+    assert(await rb("a = 1; a")).equals(r);
+  });
+
   test.case("multiline", async assert => {
     const result = [
       "(ok) type Show :: * -> Constraint",

@@ -2,4 +2,4 @@
 
 code=$(</dev/stdin)
 
-/usr/bin/ruby -e "puts(${code})"
+/usr/bin/ruby -e "${code}"

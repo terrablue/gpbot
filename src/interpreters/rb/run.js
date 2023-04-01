@@ -8,4 +8,8 @@ export const err = {
   output: lines => lines,
 };
 
-export const sanitize = input => input.trim();
+const last = -1;
+export const sanitize = input => {
+  const split = input.trim().split(";");
+  return [...split.slice(0, last), `puts(${split.at(last)})`].join("\n");
+};
