@@ -3,11 +3,9 @@ export const ok = {
   output: lines => lines.join(" "),
 };
 
-const last = -1;
 export const err = {
   source: "stderr",
   output: lines => lines,
 };
 
-export const sanitize = input => input
-  .trim();
+export const sanitize = input => input.trim();
