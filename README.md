@@ -14,6 +14,7 @@ Join `#gp` on `irc.libera.chat` to use it.
 * `erl` Erlang (`erlang`)
 * `ml` OCaml (`ocaml`)
 * `ex` Elixir (`elixir`)
+* `rb` Ruby (`ruby`)
 
 ## Run
 

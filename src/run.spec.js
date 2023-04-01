@@ -11,6 +11,7 @@ export default test => {
   const erl = syntax => run(`erl> ${syntax}`);
   const ml = syntax => run(`ml> ${syntax}`);
   const ex = syntax => run(`ex> ${syntax}`);
+  const rb = syntax => run(`rb> ${syntax}`);
 
   test.case("0 + 1", async assert => {
     const result = ["(ok) 1"];
@@ -22,6 +23,7 @@ export default test => {
     assert(await erl("0 + 1")).equals(result);
     assert(await ml("0 + 1")).equals(["(ok) int = 1"]);
     assert(await ex("0 + 1")).equals(result);
+    assert(await rb("0 + 1")).equals(result);
   });
 
   test.case("1 > 0", async assert => {
@@ -38,6 +40,7 @@ export default test => {
     assert(await erl("1 > 0")).equals(result.true);
     assert(await ml("1 > 0")).equals(result.bool_true);
     assert(await ex("1 > 0")).equals(result.true);
+    assert(await rb("1 > 0")).equals(result.true);
   });
 
   test.case("1; 1", async assert => {
@@ -61,6 +64,10 @@ export default test => {
       "          ^^",
       "Error: Syntax error"];
     assert(await ml("0 + !")).equals(errorML);
+    const errorRB = ["(err) -e:1: syntax error, unexpected ')'",
+      "puts(0 + !)",
+      "          ^"];
+    assert(await rb("0 + !")).equals(errorRB);
   });
 
   test.case("10 + 20 * 4.5", async assert => {
