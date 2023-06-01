@@ -45,7 +45,7 @@ const parse = async message => {
       return {
         lines: prepare([`(${status}) ${lines.at(0)}`, ...lines.slice(1, limit)]),
         language: languages[interpreter],
-        code,
+        code: syntax,
         explain,
       };
     } catch (error) {
