@@ -15,9 +15,9 @@
   "dependencies": {
     "irc-upd": "^0.11.0",
     "openai": "^3.2.1",
-    "runtime-compat": "^0.12.3"
+    "runtime-compat": "^0.19.1"
   },
   "devDependencies": {
-    "eslint": "^8.36.0"
+    "eslint": "^8.41.0"
   }
 }

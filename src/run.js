@@ -1,8 +1,8 @@
-import {Path} from "runtime-compat/filesystem";
+import {Path} from "runtime-compat/fs";
 import {run} from "./docker.js";
 import languages from "./languages.js";
 
-const interpreters = new Path(import.meta.url).directory.join("interpreters");
+const interpreters = new Path(import.meta.url).up(1).join("interpreters");
 
 const format = ({source, output}, result) =>
   output(result[source].toString().split("\n").filter(l => l !== ""));
