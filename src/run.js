@@ -31,7 +31,7 @@ const parse = async message => {
   const syntax = rest.join(">");
 
   const {file} = interpreters.join(interpreter, "run.js");
-  const output = [];
+
   if (await file.exists) {
     try {
       const {ok, err, sanitize} = await import(file.path);
@@ -43,7 +43,8 @@ const parse = async message => {
       const lines = asArray(format(handlers[status], result));
       memory = lines.length > limit + 1 ? lines.slice(limit + 1) : [];
       return {
-        lines: prepare([`(${status}) ${lines.at(0)}`, ...lines.slice(1, limit)]),
+        lines: prepare([`(${status}) ${lines.at(0)}`,
+          ...lines.slice(1, limit)]),
         language: languages[interpreter],
         code: syntax,
         explain,

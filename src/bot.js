@@ -14,7 +14,7 @@ const client = new irc_udp.Client(irc.network, irc.user, {channels:
 
 const commands = [",", "."];
 
-const onMessage = async (from, to, message) => {
+const onMessage = async (_, to, message) => {
   const channel = channels[to];
 
   // only react if in channel
