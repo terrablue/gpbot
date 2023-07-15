@@ -72,7 +72,7 @@ export default {
       const event = request.headers.get("x-github-event");
       const name = preface(repository, colors[repository] ?? "14");
       const {Link} = request.store;
-      const result = await events[event](body, Link);
+      const result = await events[event]?.(body, Link);
       if (result !== undefined) {
         const messages = (Array.isArray(result) ? result : [result])
           .map(message => `${name} ${message}`);
