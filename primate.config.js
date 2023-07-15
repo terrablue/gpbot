@@ -2,11 +2,17 @@ import bot from "./src/bot.js";
 
 export default {
   modules: [
-    {
-      name: "bot",
-      init() {
-        bot();
-      },
-    },
+    (_ => {
+      let client;
+      return {
+        name: "bot",
+        init() {
+          client = bot();
+        },
+        route(request, next) {
+          return next({...request, say: client.say});
+        },
+      };
+    })(),
   ],
 };

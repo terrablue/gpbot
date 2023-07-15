@@ -49,4 +49,6 @@ export default _ => {
   };
 
   client.addListener("message", onMessage);
+
+  return client;
 };
