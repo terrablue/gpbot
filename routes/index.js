@@ -34,9 +34,9 @@ const bold = message => `\x02${message}\x02`;
 const events = {
   async issues({action, issue}, Link) {
     if (action === "opened") {
-      const {html_url, user: {login}} = issue;
+      const {html_url, user: {login}, number} = issue;
       const target = `${baseuri}/${await Link.shorten(html_url)}`;
-      return `${bold(login)} opened issue [${target}]`;
+      return `${bold(login)} opened issue #${number} [${target}]`;
     }
   },
   push({commits}, Link) {
@@ -72,7 +72,7 @@ export default {
       const event = request.headers.get("x-github-event");
       const name = preface(repository, colors[repository] ?? "14");
       const {Link} = request.store;
-      const result = await events[event]?.(body, Link);
+      const result = await events[event](body, Link);
       if (result !== undefined) {
         const messages = (Array.isArray(result) ? result : [result])
           .map(message => `${name} ${message}`);
