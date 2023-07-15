@@ -13,6 +13,9 @@
     "test": "npx debris"
   },
   "dependencies": {
+    "@primate/store": "^0.9.0",
+    "@primate/types": "^0.4.1",
+    "better-sqlite3": "^8.4.0",
     "irc-upd": "^0.11.0",
     "openai": "^3.3.0",
     "primate": "^0.20.5",

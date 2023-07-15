@@ -26,14 +26,19 @@ const verify = (body, signature) => {
   return result?.[0];
 };
 
+const preface = repository => `\x0304,01${repository}\x03 ::`;
+
 const events = {
   push(data, say) {
 
   },
-  commit_comment(data) {
+  async commit_comment(data, Link) {
     const {action, repository, comment} = data;
     if (action === "created") {
-      return `${repository.full_name} :: ${comment.user.login} commented on ${comment.commit_id}`;
+      const {html_url, commit_id, user: {login}} = comment;
+      const name = preface(repository.full_name);
+      const target = await Link.shorten(html_url);
+      return `${name} ${login} commented on ${commit_id} [${target}]`;
     }
   },
 };
@@ -49,15 +54,15 @@ export default {
       assert(repository === full_name, `
         repository in event data must match repository by secret
         repository by secret: ${repository}
-        repositry in event data: ${full_name}
+        repository in event data: ${full_name}
       `);
       const event = request.headers.get("x-github-event");
-      const message = events[event](body);
+      const message = events[event](body, request.store.Link);
       if (message !== undefined) {
-        channels.forEach(channel => request.say(channel, message));
+        channels[repository].forEach(channel => request.say(channel, message));
       }
-      return new Response(null, Status.OK);
+      return new Response(null, {status: Status.OK});
     }
-    return new Response(null, Status.BadRequest);
+    return new Response(null, {status: Status.BadRequest});
   },
 };
