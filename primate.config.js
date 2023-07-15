@@ -1,7 +1,9 @@
 import bot from "./src/bot.js";
 
 export default {
-  port: 8181,
+  http: {
+    port: 8181,
+  },
   modules: [
     (_ => {
       let client;
