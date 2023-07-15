@@ -57,7 +57,7 @@ export default {
         repository in event data: ${full_name}
       `);
       const event = request.headers.get("x-github-event");
-      const message = events[event](body, request.store.Link);
+      const message = await events[event](body, request.store.Link);
       if (message !== undefined) {
         channels[repository].forEach(channel => request.say(channel, message));
       }
