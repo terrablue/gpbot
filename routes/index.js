@@ -50,6 +50,9 @@ const events = {
       return `${bold(login)} commented on commit ${cid} [${target}]`;
     }
   },
+  ping() {
+    return "ok";
+  },
 };
 
 export default {
