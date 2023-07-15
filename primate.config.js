@@ -5,9 +5,6 @@ export default {
   http: {
     port: 8181,
   },
-  logger: {
-    trace: true,
-  },
   modules: [
     store({driver: sqlite({filename: "data.db"})}),
     (_ => {
