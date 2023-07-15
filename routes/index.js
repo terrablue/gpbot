@@ -32,6 +32,13 @@ const preface = (repository, color) => `\x03${color},01${repository}\x03 ::`;
 const bold = message => `\x02${message}\x02`;
 
 const events = {
+  async issues({action, issue}, Link) {
+    if (action === "opened") {
+      const {html_url, user: {login}} = issue;
+      const target = `${baseuri}/${await Link.shorten(html_url)}`;
+      return `${bold(login)} opened issue [${target}]`;
+    }
+  },
   push({commits}, Link) {
     return Promise.all(commits.map(async commit => {
       const {author: {name}, message, url} = commit;
