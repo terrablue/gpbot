@@ -29,7 +29,7 @@ const verify = (body, signature) => {
 };
 
 const preface = (repository, color) => `\x03${color},01${repository}\x03 ::`;
-const bold = message => `\x0302,01${message}\x03`;
+const bold = message => `\x02${message}\x02`;
 
 const events = {
   push(data, say) {
