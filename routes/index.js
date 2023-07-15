@@ -15,6 +15,7 @@ const keys = from(await Promise.all(to(secrets).map(async ([key, value]) =>
   [key, await crypto.subtle.importKey("raw", encode(value), algorithm, false,
     ["verify"])])));
 const channels = valmap(conf.github, ({channels}) => channels);
+const {baseuri} = conf;
 
 const htia = string =>
   new Uint8Array(string.match(/[\dA-F]{2}/gui).map(hex => parseInt(hex, 16)));
@@ -26,7 +27,7 @@ const verify = (body, signature) => {
   return result?.[0];
 };
 
-const preface = repository => `\x0304,01${repository}\x03 ::`;
+const preface = repository => `\x0312,01${repository}\x03 ::`;
 
 const events = {
   push(data, say) {
@@ -37,8 +38,9 @@ const events = {
     if (action === "created") {
       const {html_url, commit_id, user: {login}} = comment;
       const name = preface(repository.full_name);
-      const target = await Link.shorten(html_url);
-      return `${name} ${login} commented on ${commit_id} [${target}]`;
+      const target = `https://${baseuri}/${await Link.shorten(html_url)}`;
+      const cid = commit_id.slice(0, 8);
+      return `${name} ${login} commented on commit ${cid} [${target}]`;
     }
   },
 };
