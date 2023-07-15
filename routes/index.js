@@ -10,7 +10,6 @@ const hash = "SHA-256";
 const algorithm = {name: "HMAC", hash};
 
 const secrets = valmap(conf.github, ({secret}) => secret);
-console.log(secrets);
 const keys = from(await Promise.all(to(secrets).map(async ([key, value]) =>
   [key, await crypto.subtle.importKey("raw", encode(value), algorithm, false,
     ["verify"])])));

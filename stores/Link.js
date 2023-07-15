@@ -1,4 +1,4 @@
-import {string, primary} from "@primate/types";
+import {string, primary, date} from "@primate/types";
 import crypto from "runtime-compat/crypto";
 
 const length = 8;
@@ -12,6 +12,7 @@ export const actions = (_, store) => {
           id: "primary",
           target: "string",
           source: "string",
+          created: "datetime",
         });
       }
       const source = crypto.randomUUID().slice(0, length);
@@ -25,4 +26,5 @@ export default {
   id: primary,
   target: string,
   source: string,
+  created: date,
 };
