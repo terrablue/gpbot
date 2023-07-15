@@ -9,13 +9,14 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-images",
-    "start": "node src/bot.js",
+    "start": "npx primate",
     "test": "npx debris"
   },
   "dependencies": {
     "irc-upd": "^0.11.0",
     "openai": "^3.3.0",
-    "runtime-compat": "^0.22.1"
+    "primate": "^0.20.5",
+    "runtime-compat": "^0.22.2"
   },
   "devDependencies": {
     "maximin": "^0.1.5"
