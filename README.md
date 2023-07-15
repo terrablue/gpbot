@@ -68,6 +68,28 @@ A typical output should be
 
 `This code is licensed under the MIT license.`
 
+## React to GitHub webhooks
+
+The bot can react to different webhook events. Currently supported are issue
+creation, commit pushes, and commenting on commits.
+
+The bot uses the POST `/` path to receive those webhook events, generate
+shortened links to GitHub and report the event in the given channels. If you're
+running your own instance of gpbot, make sure to enter your fully qualified
+domain under `baseuri`.
+
+To have the bot receive webhook events, create a webhook in your repository,
+add a secret, and set the webhook to send any combination of the following
+events:
+
+* Issues
+* Pushes
+* Commit comments
+
+In your configuration file, add the repository under `github` (see example) and
+configure secret and channels to report to. If you have several repositories
+monitored in the same channel, you can assign them different colors (00 to 15).
+
 ## Example configuration
 
 Create a `conf.json` in root.
@@ -90,6 +112,14 @@ Create a `conf.json` in root.
       "max_tokens": 100,
       "model": "text-davinci-003",
       "temperature": 0
+    }
+  },
+  "baseuri": "https://gpbot.org",
+  "github": {
+    "terrablue/gpbot": {
+      "color": "07",
+      "secret": "your-web-hook-secret",
+      "channels": ["#gp"]
     }
   }
 }
