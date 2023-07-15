@@ -11,8 +11,10 @@ const {channels} = irc;
 const commands = [",", "."];
 
 export default _ => {
-  const client = new irc_udp.Client(irc.network, irc.user, {channels:
-    Object.keys(channels)});
+  const client = new irc_udp.Client(irc.network, irc.user, {
+    channels: Object.keys(channels),
+    password: irc.password,
+  });
 
   const onMessage = async (_, to, message) => {
     const channel = channels[to];
