@@ -15,6 +15,7 @@ const keys = from(await Promise.all(to(secrets).map(async ([key, value]) =>
   [key, await crypto.subtle.importKey("raw", encode(value), algorithm, false,
     ["verify"])])));
 const channels = valmap(conf.github, ({channels}) => channels);
+const colors = valmap(conf.github, ({color}) => color);
 const {baseuri} = conf;
 
 const htia = string =>
@@ -27,20 +28,19 @@ const verify = (body, signature) => {
   return result?.[0];
 };
 
-const preface = repository => `\x0312,01${repository}\x03 ::`;
+const preface = (repository, color) => `\x03${color},01${repository}\x03 ::`;
+const bold = message => `\x0302,01${message}\x03`;
 
 const events = {
   push(data, say) {
 
   },
-  async commit_comment(data, Link) {
-    const {action, repository, comment} = data;
+  async commit_comment({action, comment}, Link) {
     if (action === "created") {
       const {html_url, commit_id, user: {login}} = comment;
-      const name = preface(repository.full_name);
       const target = `${baseuri}/${await Link.shorten(html_url)}`;
-      const cid = commit_id.slice(0, 8);
-      return `${name} ${login} commented on commit ${cid} [${target}]`;
+      const cid = bold(commit_id.slice(0, 8));
+      return `${bold(login)} commented on commit ${cid} [${target}]`;
     }
   },
 };
@@ -59,7 +59,9 @@ export default {
         repository in event data: ${full_name}
       `);
       const event = request.headers.get("x-github-event");
-      const message = await events[event](body, request.store.Link);
+      const name = preface(repository, colors[repository] ?? "14");
+      const {Link} = request.store;
+      const message = `${name} ${await events[event](body, Link)}`;
       if (message !== undefined) {
         channels[repository].forEach(channel => request.say(channel, message));
       }
