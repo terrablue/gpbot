@@ -16,7 +16,7 @@ export const actions = (_, store) => {
         });
       }
       const source = crypto.randomUUID().slice(0, length);
-      await store.insert({target, source});
+      await store.insert({target, source, created: new Date()});
       return source;
     },
   };
