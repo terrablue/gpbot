@@ -38,7 +38,7 @@ const events = {
     if (action === "created") {
       const {html_url, commit_id, user: {login}} = comment;
       const name = preface(repository.full_name);
-      const target = `https://${baseuri}/${await Link.shorten(html_url)}`;
+      const target = `${baseuri}/${await Link.shorten(html_url)}`;
       const cid = commit_id.slice(0, 8);
       return `${name} ${login} commented on commit ${cid} [${target}]`;
     }
