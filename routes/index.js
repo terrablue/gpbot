@@ -32,8 +32,12 @@ const preface = (repository, color) => `\x03${color},01${repository}\x03 ::`;
 const bold = message => `\x02${message}\x02`;
 
 const events = {
-  push(data, say) {
-
+  push({commits}, Link) {
+    return Promise.all(commits.map(async commit => {
+      const {author: {name}, message, url} = commit;
+      const target = `${baseuri}/${await Link.shorten(url)}`;
+      return `${bold(name)} commited ${bold(message)} [${target}]`;
+    }));
   },
   async commit_comment({action, comment}, Link) {
     if (action === "created") {
@@ -61,9 +65,14 @@ export default {
       const event = request.headers.get("x-github-event");
       const name = preface(repository, colors[repository] ?? "14");
       const {Link} = request.store;
-      const message = `${name} ${await events[event](body, Link)}`;
-      if (message !== undefined) {
-        channels[repository].forEach(channel => request.say(channel, message));
+      const result = await events[event](body, Link);
+      if (result !== undefined) {
+        const messages = (Array.isArray(result) ? result : [result])
+          .map(message => `${name} ${message}`);
+
+        channels[repository].forEach(channel =>
+          messages.forEach(message =>
+            request.say(channel, message)));
       }
       return new Response(null, {status: Status.OK});
     }
