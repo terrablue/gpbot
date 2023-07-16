@@ -56,6 +56,13 @@ const events = {
 };
 
 export default {
+  get() {
+    return `
+      This is the homepage of gpbot, an IRC bot for great programmers.
+
+      https://github.com/terrablue/gpbot
+    `;
+  },
   async post(request) {
     const body = request.body.get();
     const signature = request.headers.get("x-hub-signature-256");
