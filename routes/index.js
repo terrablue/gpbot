@@ -29,10 +29,10 @@ const bold = message => `\x02${message}\x02`;
 
 const events = {
   async issues({action, issue}, Link) {
-    if (action === "opened") {
+    if (["opened", "closed"].includes(action)) {
       const {html_url, user: {login}, title} = issue;
       const target = `${baseuri}/${await Link.shorten(html_url)}`;
-      return `${bold(login)} opened issue ${bold(title)} [${target}]`;
+      return `${bold(login)} ${action} issue ${bold(title)} [${target}]`;
     }
   },
   push({commits}, Link) {
