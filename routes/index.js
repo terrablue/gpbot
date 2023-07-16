@@ -24,7 +24,7 @@ const verify = (body, signature, repository) =>
   crypto.subtle.verify(algorithm.name, keys[repository], htia(signature),
     encode(body));
 
-const preface = (repository, color) => `\x03${color},01${repository}\x03 ::`;
+const preface = (repository, color) => `\x03${color},99${repository}\x03 ::`;
 const bold = message => `\x02${message}\x02`;
 
 const events = {
