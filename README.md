@@ -1,4 +1,4 @@
-# General programming bot
+# General programmers bot
 This is a bot for IRC to allow quick testing and comparing of code in different
 languages.
 
