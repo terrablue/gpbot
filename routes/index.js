@@ -32,14 +32,14 @@ const events = {
     if (["opened", "closed"].includes(action)) {
       const {html_url, user: {login}, title} = issue;
       const target = `${baseuri}/${await Link.shorten(html_url)}`;
-      return `${bold(login)} ${action} issue ${bold(title)} [${target}]`;
+      return `${bold(login)} ${action} issue ${bold(title)} | ${target}`;
     }
   },
   push({commits}, Link) {
     return Promise.all(commits.map(async commit => {
       const {author: {name}, message, url} = commit;
       const target = `${baseuri}/${await Link.shorten(url)}`;
-      return `${bold(name)} committed ${bold(message)} [${target}]`;
+      return `${bold(name)} committed ${bold(message)} | ${target}`;
     }));
   },
   async commit_comment({action, comment}, Link) {
@@ -47,7 +47,7 @@ const events = {
       const {html_url, commit_id, user: {login}} = comment;
       const target = `${baseuri}/${await Link.shorten(html_url)}`;
       const cid = bold(commit_id.slice(0, 8));
-      return `${bold(login)} commented on commit ${cid} [${target}]`;
+      return `${bold(login)} commented on commit ${cid} | ${target}`;
     }
   },
   ping() {
