@@ -10,6 +10,8 @@ const {irc, openai} = conf;
 const {channels} = irc;
 const commands = [",", "."];
 
+const gpt_command = "!gpt";
+
 export default _ => {
   const client = new irc_udp.Client(irc.network, irc.user, {
     channels: Object.keys(channels),
@@ -25,11 +27,10 @@ export default _ => {
     }
 
     if (openai?.api_key !== undefined) {
-      if (channel.gpt && message.startsWith("!gpt")) {
-        client.say(to, await gpt(openai.api_key, {
-          ...openai.completion,
-          prompt: message.slice(4).trim(),
-        }));
+      if (channel.gpt && message.startsWith(gpt_command)) {
+        const config = {...openai.completion};
+        const content = message.slice(gpt_command.length).trim();
+        client.say(to, await gpt(openai.api_key, config, content));
         return;
       }
       if (channel.review && message.startsWith("!review")) {
