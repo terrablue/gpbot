@@ -37,9 +37,9 @@ const events = {
   },
   push({commits}, Link) {
     return Promise.all(commits.map(async commit => {
-      const {author: {name}, message, url} = commit;
+      const {author: {username}, message, url} = commit;
       const target = `${baseuri}/${await Link.shorten(url)}`;
-      return `${bold(name)} committed ${bold(message)} | ${target}`;
+      return `${bold(username)} committed ${bold(message)} | ${target}`;
     }));
   },
   async commit_comment({action, comment}, Link) {
