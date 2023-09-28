@@ -26,6 +26,7 @@ const verify = (body, signature, repository) =>
 
 const preface = (repository, color) => `\x03${color},99${repository}\x03 ::`;
 const bold = message => `\x02${message}\x02`;
+const grey = text => `\x0314,01${text}\x03`;
 
 const events = {
   async issues({action, issue}, Link) {
@@ -35,11 +36,12 @@ const events = {
       return `${bold(login)} ${action} issue ${bold(title)} | ${target}`;
     }
   },
-  push({commits}, Link) {
+  push({commits, ref}, Link) {
+    const branch = grey(ref.split("/").at(-1));
     return Promise.all(commits.map(async commit => {
       const {author: {username}, message, url} = commit;
       const target = `${baseuri}/${await Link.shorten(url)}`;
-      return `${bold(username)} committed ${bold(message)} | ${target}`;
+      return `[${branch}] ${bold(username)} committed ${bold(message)} | ${target}`;
     }));
   },
   async commit_comment({action, comment}, Link) {
