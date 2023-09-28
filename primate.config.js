@@ -11,8 +11,9 @@ export default {
       let client;
       return {
         name: "bot",
-        init() {
+        init(app, next) {
           client = bot();
+          return next(app);
         },
         route(request, next) {
           return next({...request, say: (...args) => client.say(...args)});

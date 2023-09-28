@@ -17,7 +17,7 @@
     "@primate/types": "^0.8.0",
     "better-sqlite3": "^8.6.0",
     "irc-upd": "^0.11.0",
-    "openai": "^4.10.0",
+    "openai": "^3.3.0",
     "primate": "^0.24.0",
     "runtime-compat": "^0.29.0"
   },
