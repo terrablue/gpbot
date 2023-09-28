@@ -13,15 +13,15 @@
     "test": "npx debris"
   },
   "dependencies": {
-    "@primate/store": "^0.9.3",
-    "@primate/types": "^0.4.2",
-    "better-sqlite3": "^8.5.0",
+    "@primate/store": "^0.14.0",
+    "@primate/types": "^0.8.0",
+    "better-sqlite3": "^8.6.0",
     "irc-upd": "^0.11.0",
-    "openai": "^3.3.0",
-    "primate": "^0.20.5",
-    "runtime-compat": "^0.24.0"
+    "openai": "^4.10.0",
+    "primate": "^0.24.0",
+    "runtime-compat": "^0.29.0"
   },
   "devDependencies": {
-    "maximin": "^0.1.5"
+    "maximin": "^0.2.0"
   }
 }

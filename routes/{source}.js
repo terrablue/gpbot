@@ -1,5 +1,5 @@
 import {redirect} from "primate";
-import {assert} from "runtime-compat/dyndef";
+import {assert} from "runtime-compat/invariant";
 
 export default {
   async get(request) {

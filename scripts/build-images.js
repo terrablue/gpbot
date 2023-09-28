@@ -1,4 +1,4 @@
-import {Path} from "runtime-compat/filesystem";
+import {Path} from "runtime-compat/fs";
 import {execSync} from "node:child_process";
 
 const interpreters = Path.resolve().join("src", "interpreters");
