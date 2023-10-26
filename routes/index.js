@@ -29,9 +29,8 @@ const bold = message => `\x02${message}\x02`;
 const grey = text => `\x0314,01${text}\x03`;
 
 const events = {
-  async issues({action, issue}, Link) {
+  async issues({action, issue: {html_url, title}, sender: {login}}, Link) {
     if (["opened", "closed"].includes(action)) {
-      const {html_url, user: {login}, title} = issue;
       const target = `${baseuri}/${await Link.shorten(html_url)}`;
       return `${bold(login)} ${action} issue ${bold(title)} | ${target}`;
     }
