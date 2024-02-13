@@ -65,7 +65,7 @@ export default {
     `;
   },
   async post(request) {
-    const body = request.body.get();
+    const { body } = request;
     const signature = request.headers.get("x-hub-signature-256");
     const repository = body.repository.full_name;
     const verified = await verify(JSON.stringify(body),
