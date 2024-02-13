@@ -1,15 +1,18 @@
-import {Configuration, OpenAIApi} from "openai";
+import OpenAI from "openai";
 
 const preprompt = language => `Explain the following ${language} code:`;
 
 export default async (apiKey, language, code, config) => {
-  const openai = new OpenAIApi(new Configuration({apiKey}));
+  const openai = new OpenAI({ apiKey });
   try {
     const prompt = `${preprompt(language)} ${code}`;
-    const content = (await openai.createCompletion({
+    const chat_completion = (await openai.chat.completions.create({
       ...config,
-      prompt,
-    })).data.choices[0].text;
+      messages: [{
+        role: "assistant", content: `${prompt}`,
+      }],
+    }));
+    const { choices: [{ message: { content } }] } = chat_completion;
     return `(gpt) ${content.replaceAll("\n", "")}`;
   } catch (error) {
     console.log(error);

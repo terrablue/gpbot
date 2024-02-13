@@ -1,4 +1,4 @@
-import {Configuration, OpenAIApi} from "openai";
+import OpenAI from "openai";
 
 const preprompt = "Review the following code.";
 
@@ -13,7 +13,7 @@ const domains = {
 };
 
 export default async (apiKey, message, config) => {
-  const openai = new OpenAIApi(new Configuration({apiKey}));
+  const openai = new OpenAI({ apiKey });
   const [, url, ...postprompt] = message.split(" ");
   const domain = Object.entries(domains).find(([key]) =>
     url.startsWith(`https://${key}`));
@@ -24,10 +24,13 @@ export default async (apiKey, message, config) => {
   try {
     const code = await (await fetch(getRaw(url))).text();
     const prompt = `${preprompt} ${postprompt.join(" ")}\n\n${code}`;
-    const content = (await openai.createCompletion({
+    const chat_completion = await openai.chat.completions.create({
       ...config,
-      prompt,
-    })).data.choices[0].text;
+      messages: [{
+        role: "assistant", content: `${prompt}`,
+      }],
+    });
+    const { choices: [{ message: { content } }] } = chat_completion;
     return content;
   } catch (error) {
     console.log(error);

@@ -1,10 +1,10 @@
-import {Path} from "runtime-compat/fs";
-import {run} from "./docker.js";
+import { File } from "rcompat/fs";
+import { run } from "./docker.js";
 import languages from "./languages.js";
 
-const interpreters = new Path(import.meta.url).up(1).join("interpreters");
+const interpreters = new File(import.meta.url).up(1).join("interpreters");
 
-const format = ({source, output}, result) =>
+const format = ({ source, output }, result) =>
   output(result[source].toString().split("\n").filter(l => l !== ""));
 
 const asArray = maybe => Array.isArray(maybe) ? maybe : [maybe];
@@ -30,12 +30,12 @@ const parse = async message => {
   const interpreter = explain ? command.slice(0, -1) : command;
   const syntax = rest.join(">");
 
-  const {file} = interpreters.join(interpreter, "run.js");
+  const file = interpreters.join(interpreter, "run.js");
 
-  if (await file.exists) {
+  if (await file.exists()) {
     try {
-      const {ok, err, sanitize} = await import(file.path);
-      const handlers = {ok, err};
+      const { ok, err, sanitize } = await file.import();
+      const handlers = { ok, err };
       const code = sanitize(syntax);
       const result = run(interpreter, code);
       const errored = result.stderr.toString().length === 0;
@@ -54,7 +54,7 @@ const parse = async message => {
     }
   }
 
-  return {lines: []};
+  return { lines: [] };
 };
 
 export default async message => commands[message]?.() ?? parse(message);

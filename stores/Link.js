@@ -1,5 +1,5 @@
-import {string, primary, date} from "@primate/types";
-import crypto from "runtime-compat/crypto";
+import { string, primary, date } from "@primate/types";
+import crypto from "rcompat/crypto";
 
 const length = 8;
 
@@ -15,7 +15,7 @@ export const actions = Link => {
     async shorten(target) {
       await Link.schema.create(schema);
       const source = crypto.randomUUID().slice(0, length);
-      await Link.insert({target, source, created: new Date()});
+      await Link.insert({ target, source, created: new Date() });
       return source;
     },
   };

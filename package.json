@@ -1,7 +1,7 @@
 {
   "name": "gpbot",
-  "version": "0.1.0",
-  "author": "Terrablue <terrablue@posteo.is>",
+  "private": true,
+  "author": "Terrablue <terrablue@proton.me>",
   "bugs": "https://github.com/terrablue/gpbot/issues",
   "repository": "https://github.com/terrablue/gpbot",
   "description": "General programming bot",
@@ -13,15 +13,15 @@
     "test": "npx debris"
   },
   "dependencies": {
-    "@primate/store": "^0.14.0",
-    "@primate/types": "^0.8.0",
-    "better-sqlite3": "^8.6.0",
+    "@primate/store": "^0.22.2",
+    "@primate/types": "^0.13.1",
+    "better-sqlite3": "^9.4.1",
     "irc-upd": "^0.11.0",
-    "openai": "^3.3.0",
-    "primate": "^0.24.0",
-    "runtime-compat": "^0.29.0"
+    "openai": "^4.28.0",
+    "primate": "^0.29.5",
+    "rcompat": "^0.8.4"
   },
   "devDependencies": {
-    "maximin": "^0.2.0"
+    "maximin": "^0.2.2"
   }
 }

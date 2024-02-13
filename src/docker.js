@@ -1,4 +1,4 @@
-import {spawnSync} from "node:child_process";
+import { spawnSync } from "node:child_process";
 
 const command = "docker";
 export const run = (name, input) => spawnSync(command,
@@ -10,4 +10,4 @@ export const run = (name, input) => spawnSync(command,
     "--net=none",
     `gpbot/${name}`,
   ],
-  {input});
+  { input });

@@ -1,21 +1,21 @@
-import {Path} from "runtime-compat/fs";
-import crypto from "runtime-compat/crypto";
-import {Response, Status} from "runtime-compat/http";
-import {valmap, from, to} from "runtime-compat/object";
+import { File } from "rcompat/fs";
+import crypto from "rcompat/crypto";
+import { Response, Status } from "rcompat/http";
+import { valmap, from, to } from "rcompat/object";
 
-const conf = await new Path(import.meta.url).up(2).join("conf.json").json();
+const conf = await new File(import.meta.url).up(3).join("conf.json").json();
 const encoder = new TextEncoder("utf-8");
 const encode = what => encoder.encode(what);
 const hash = "SHA-256";
-const algorithm = {name: "HMAC", hash};
+const algorithm = { name: "HMAC", hash };
 
-const secrets = valmap(conf.github, ({secret}) => secret);
+const secrets = valmap(conf.github, ({ secret }) => secret);
 const keys = from(await Promise.all(to(secrets).map(async ([key, value]) =>
   [key, await crypto.subtle.importKey("raw", encode(value), algorithm, false,
     ["verify"])])));
-const channels = valmap(conf.github, ({channels}) => channels);
-const colors = valmap(conf.github, ({color}) => color);
-const {baseuri} = conf;
+const channels = valmap(conf.github, ({ channels }) => channels);
+const colors = valmap(conf.github, ({ color }) => color);
+const { baseuri } = conf;
 
 const htia = string =>
   new Uint8Array(string.match(/[\dA-F]{2}/gui).map(hex => parseInt(hex, 16)));
@@ -29,23 +29,23 @@ const bold = message => `\x02${message}\x02`;
 const grey = text => `\x0314,01${text}\x03`;
 
 const events = {
-  async issues({action, issue: {html_url, title}, sender: {login}}, Link) {
+  async issues({ action, issue: { html_url, title }, sender: { login } }, Link) {
     if (["opened", "closed"].includes(action)) {
       const target = `${baseuri}/${await Link.shorten(html_url)}`;
       return `${bold(login)} ${action} issue ${bold(title)} | ${target}`;
     }
   },
-  push({commits, ref}, Link) {
+  push({ commits, ref }, Link) {
     const branch = grey(ref.split("/").at(-1));
     return Promise.all(commits.map(async commit => {
-      const {author: {username}, message, url} = commit;
+      const { author: { username }, message, url } = commit;
       const target = `${baseuri}/${await Link.shorten(url)}`;
       return `${branch} ${bold(username)} committed ${bold(message)} | ${target}`;
     }));
   },
-  async commit_comment({action, comment}, Link) {
+  async commit_comment({ action, comment }, Link) {
     if (action === "created") {
-      const {html_url, commit_id, user: {login}} = comment;
+      const { html_url, commit_id, user: { login } } = comment;
       const target = `${baseuri}/${await Link.shorten(html_url)}`;
       const cid = bold(commit_id.slice(0, 8));
       return `${bold(login)} commented on commit ${cid} | ${target}`;
@@ -73,7 +73,7 @@ export default {
     if (verified) {
       const event = request.headers.get("x-github-event");
       const name = preface(repository, colors[repository] ?? "14");
-      const {Link} = request.store;
+      const { Link } = request.store;
       const result = await events[event](body, Link);
       if (result !== undefined) {
         const messages = (Array.isArray(result) ? result : [result])
@@ -83,8 +83,8 @@ export default {
           messages.forEach(message =>
             request.say(channel, message)));
       }
-      return new Response(null, {status: Status.OK});
+      return new Response(null, { status: Status.OK });
     }
-    return new Response(null, {status: Status.BadRequest});
+    return new Response(null, { status: Status.BadRequest });
   },
 };
