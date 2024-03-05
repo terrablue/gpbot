@@ -44,7 +44,7 @@ export default _ => {
     }
 
     const { lines, language, code, explain: _explain } = await run(message);
-    lines.forEach(line => client.say(to, line));
+    lines?.forEach(line => client.say(to, line));
     if (openai?.api_key !== undefined && _explain) {
       const { api_key, review } = openai;
       client.say(to, await explain(api_key, language, code, review));
