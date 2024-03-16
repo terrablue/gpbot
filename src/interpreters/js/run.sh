@@ -2,4 +2,4 @@
 
 code=$(</dev/stdin)
 
-/app/flog -e "log(${code})"
+bun -e "console.log(eval(\"${code}\"))"

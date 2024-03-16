@@ -9,7 +9,7 @@ export const err = {
   output: lines => lines.at(last),
 };
 
-export const sanitize = input => input
+export const sanitize = input => JSON.stringify(input
   .replaceAll("import", "")
   .replaceAll("eval(", "")
-  .trim();
+  .trim()).slice(1, -1);

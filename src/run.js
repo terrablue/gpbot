@@ -37,7 +37,7 @@ const parse = async message => {
       const { ok, err, sanitize } = await file.import();
       const handlers = { ok, err };
       const code = sanitize(syntax);
-      const result = run(interpreter, code);
+      const result = run(interpreter, code.trim());
       const errored = result.stderr.toString().length === 0;
       const status = errored ? "ok" : "err";
       const lines = asArray(format(handlers[status], result));

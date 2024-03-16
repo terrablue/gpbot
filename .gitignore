@@ -5,3 +5,4 @@ package-lock.json
 conf.json
 build
 *.db
+bun.lockb
