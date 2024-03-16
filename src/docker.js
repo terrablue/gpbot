@@ -10,4 +10,4 @@ export const run = (name, input) => spawnSync(command,
     "--net=none",
     `gpbot/${name}`,
   ],
-  { input });
+  { input, timeout: 500 });
