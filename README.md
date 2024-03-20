@@ -2,14 +2,12 @@
 This is a bot for IRC to allow quick testing and comparing of code in different
 languages.
 
-Join `#gp` on `irc.libera.chat` to use it.
-
 ## Currently supported interpreters (see also `src/interpreters`)
 
 * `hs` Haskell (`ghci`)
 * `rs` Rust ([`runner`](https://docs.rs/crate/runner))
 * `py` Python (`python`)
-* `js` JavaScript ([`flog`](https://github.com/flogjs/flog))
+* `js` JavaScript ([`bun`](https://bun.sh))
 * `ts` TypeScript ([`ts-node`](https://www.npmjs.com/package/ts-node))
 * `erl` Erlang (`erlang`)
 * `ml` OCaml (`ocaml`)
@@ -99,7 +97,7 @@ Create a `conf.json` in root.
   "irc": {
     "network": "irc.libera.chat",
     "user": "gpbot",
-    "channels": "#gp"
+    "channels": "#gpbot"
   },
   "openai": {
     "api_key": "sk-your-openai-key",
@@ -119,7 +117,7 @@ Create a `conf.json` in root.
     "terrablue/gpbot": {
       "color": "07",
       "secret": "your-web-hook-secret",
-      "channels": ["#gp"]
+      "channels": ["#gpbot"]
     }
   }
 }
