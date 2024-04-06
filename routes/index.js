@@ -29,6 +29,10 @@ const bold = message => `\x02${message}\x02`;
 const grey = text => `\x0314,01${text}\x03`;
 
 const events = {
+  async release({ release: { html_url, name }, sender: { login } }, Link) {
+    const target = `${baseuri}/${await Link.shorten(html_url)}`;
+    return `${bold(login)} released ${bold(name)} | ${target}`;
+  },
   async issues({ action, issue: { html_url, title }, sender: { login } }, Link) {
     if (["opened", "closed"].includes(action)) {
       const target = `${baseuri}/${await Link.shorten(html_url)}`;

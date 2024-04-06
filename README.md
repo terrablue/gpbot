@@ -80,9 +80,10 @@ To have the bot receive webhook events, create a webhook in your repository,
 add a secret, and set the webhook to send any combination of the following
 events:
 
-* Issues
-* Pushes
-* Commit comments
+* Issues (`issues`)
+* Pushes (`push`)
+* Commit comments (`commit_comment`)
+* Releases (`release`)
 
 In your configuration file, add the repository under `github` (see example) and
 configure secret and channels to report to. If you have several repositories
