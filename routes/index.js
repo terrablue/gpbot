@@ -27,7 +27,7 @@ const verify = (body, signature, repository) =>
 
 const preface = (repository, color) => `\x03${color},99${repository}\x03 ::`;
 const bold = message => `\x02${message}\x02`;
-const grey = text => `\x0314,01${text}\x03`;
+const grey = text => `\x0396,01${text}\x03`;
 
 const events = {
   async release({ release: { html_url, name }, sender: { login } }, Link) {
