@@ -15,6 +15,7 @@ const keys = from(await Promise.all(to(secrets).map(async ([key, value]) =>
     ["verify"])])));
 const channels = valmap(conf.github, ({ channels }) => channels);
 const colors = valmap(conf.github, ({ color }) => color);
+const branches = valmap(conf.github, ({ branches }) => branches);
 const { baseuri } = conf;
 
 const htia = string =>
@@ -39,12 +40,17 @@ const events = {
       return `${bold(login)} ${action} issue ${bold(title)} | ${target}`;
     }
   },
-  push({ commits, ref }, Link) {
-    const branch = grey(ref.split("/").at(-1));
+  push({ commits, ref }, Link, repository) {
+    const branch = ref.split("/").at(-1);
+    const repository_branches = branches[repository];
+    if (repository_branches !== undefined && !repository_branches.includes(branch)) {
+      return [];
+    }
+    const $branch = grey(branch);
     return Promise.all(commits.map(async commit => {
       const { author: { username }, message, url } = commit;
       const target = `${baseuri}/${await Link.shorten(url)}`;
-      return `${branch} ${bold(username)} committed ${bold(message)} | ${target}`;
+      return `${$branch} ${bold(username)} committed ${bold(message)} | ${target}`;
     }));
   },
   async commit_comment({ action, comment }, Link) {
@@ -78,7 +84,7 @@ export default {
       const event = request.headers.get("x-github-event");
       const name = preface(repository, colors[repository] ?? "14");
       const { Link } = request.store;
-      const result = await events[event](body, Link);
+      const result = await events[event](body, Link, repository);
       if (result !== undefined) {
         const messages = (Array.isArray(result) ? result : [result])
           .map(message => `${name} ${message}`);
