@@ -89,6 +89,9 @@ In your configuration file, add the repository under `github` (see example) and
 configure secret and channels to report to. If you have several repositories
 monitored in the same channel, you can assign them different colors (00 to 15).
 
+If you want to just subscribe to certain branches, add `branches` and a list of
+branches. Otherwise pushes from all branches will be reported.
+
 ## Example configuration
 
 Create a `conf.json` in root.
@@ -119,6 +122,7 @@ Create a `conf.json` in root.
       "color": "07",
       "secret": "your-web-hook-secret",
       "channels": ["#gpbot"]
+      "branches": ["master"]
     }
   }
 }
