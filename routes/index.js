@@ -30,7 +30,13 @@ const bold = message => `\x02${message}\x02`;
 const grey = text => `\x0396,01${text}\x03`;
 
 const events = {
-  async release({ release: { html_url, name }, sender: { login } }, Link) {
+  async release({
+    release: { html_url, name, draft },
+    sender: { login },
+  }, Link) {
+    if (draft) {
+      return [];
+    }
     const target = `${baseuri}/${await Link.shorten(html_url)}`;
     return `${bold(login)} released ${bold(name)} | ${target}`;
   },
