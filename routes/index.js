@@ -31,10 +31,11 @@ const grey = text => `\x0396,01${text}\x03`;
 
 const events = {
   async release({
-    release: { html_url, name, draft },
+    action,
+    release: { html_url, name },
     sender: { login },
   }, Link) {
-    if (draft) {
+    if (action !== "released") {
       return [];
     }
     const target = `${baseuri}/${await Link.shorten(html_url)}`;
