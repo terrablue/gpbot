@@ -13,13 +13,13 @@
     "test": "npx debris"
   },
   "dependencies": {
-    "@primate/store": "^0.23.1",
-    "@primate/types": "^0.14.0",
+    "@primate/store": "^0.24.0",
+    "@primate/types": "^0.15.0",
     "better-sqlite3": "^9.4.3",
     "irc-upd": "^0.11.0",
-    "openai": "^4.29.1",
-    "primate": "^0.30.2",
-    "rcompat": "^0.9.6"
+    "openai": "^4.47.1",
+    "primate": "^0.31.3",
+    "rcompat": "^0.11.1"
   },
   "devDependencies": {
     "maximin": "^0.2.2"
