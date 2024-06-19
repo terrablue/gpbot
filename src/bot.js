@@ -12,11 +12,24 @@ const commands = [",", "."];
 
 const gpt_command = "!gpt";
 
+const encoder = new TextEncoder();
+const truncate = (string, limit) => encoder.encode(string).length > limit
+  ? truncate(string.slice(0, -1), limit)
+  : string;
+
 export default _ => {
   const client = new irc_udp.Client(irc.network, irc.user, {
     channels: Object.keys(channels),
     password: irc.password,
   });
+
+  const say = (to, message) => {
+    const ellipsis = " [truncated]";
+    // https://datatracker.ietf.org/doc/html/rfc2812#section-2.3
+    const max_message_length = 510;
+    const truncated = truncate(message, max_message_length - ellipsis.length);
+    client.say(to, truncated === message ? message : `${truncated}${ellipsis}`);
+  };
 
   const onMessage = async (_, to, message) => {
     const channel = channels[to];
@@ -30,11 +43,11 @@ export default _ => {
       if (channel.gpt && message.startsWith(gpt_command)) {
         const config = { ...openai.completion };
         const content = message.slice(gpt_command.length).trim();
-        client.say(to, await gpt(openai.api_key, config, content));
+        say(to, await gpt(openai.api_key, config, content));
         return;
       }
       if (channel.review && message.startsWith("!review")) {
-        client.say(to, await review(openai.api_key, message, openai.review));
+        say(to, await review(openai.api_key, message, openai.review));
         return;
       }
     }
@@ -44,10 +57,10 @@ export default _ => {
     }
 
     const { lines, language, code, explain: _explain } = await run(message);
-    lines?.forEach(line => client.say(to, line));
+    lines?.forEach(line => say(to, line));
     if (openai?.api_key !== undefined && _explain) {
       const { api_key, review } = openai;
-      client.say(to, await explain(api_key, language, code, review));
+      say(to, await explain(api_key, language, code, review));
     }
   };
 
