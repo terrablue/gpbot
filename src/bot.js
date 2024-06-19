@@ -26,8 +26,7 @@ export default _ => {
   const say = (to, message) => {
     const sanitized = message.split("\r").join("\\r\\n");
     const ellipsis = " [truncated]";
-    const prefix = `PRIVMSG ${to} :`;
-    const max_length = client.maxLineLength - ellipsis.length - prefix.length;
+    const max_length = client.maxLineLength - ellipsis.length;
     const truncated = truncate(sanitized, max_length);
     client.say(to, truncated === sanitized
       ? sanitized
