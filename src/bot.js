@@ -24,11 +24,16 @@ export default _ => {
   });
 
   const say = (to, message) => {
+    const sanitized = message.split("\r").join("\\r\\n");
     const ellipsis = " [truncated]";
     // https://datatracker.ietf.org/doc/html/rfc2812#section-2.3
     const max_message_length = 510;
-    const truncated = truncate(message, max_message_length - ellipsis.length);
-    client.say(to, truncated === message ? message : `${truncated}${ellipsis}`);
+    const prefix = `PRIVMSG ${to} :`;
+    const max_length = max_message_length - ellipsis.length - prefix.length;
+    const truncated = truncate(sanitized, max_length);
+    client.say(to, truncated === sanitized
+      ? sanitized
+      : `${truncated}${ellipsis}`);
   };
 
   const onMessage = async (_, to, message) => {
