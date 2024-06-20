@@ -1,6 +1,5 @@
-# General programmers bot
-This is a bot for IRC to allow quick testing and comparing of code in different
-languages.
+# Great programmers bot
+IRC bot for quick testing and comparing of code in different languages.
 
 ## Currently supported interpreters (see also `src/interpreters`)
 
@@ -101,7 +100,12 @@ Create a `conf.json` in root.
   "irc": {
     "network": "irc.libera.chat",
     "user": "gpbot",
-    "channels": "#gpbot"
+    "channels": {
+      "#gpbot": {
+        "review": true,
+        "gpt": true
+      }
+    }
   },
   "openai": {
     "api_key": "sk-your-openai-key",
