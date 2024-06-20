@@ -3,8 +3,8 @@ const last = -1;
 export const ok = {
   source: "stdout",
   output: lines => {
-    const [, line] = lines;
-    const index = line.indexOf(">");
+    const [,, line] = lines;
+    const index = line.lastIndexOf(">");
     return line.slice(index + 2);
   },
 };
