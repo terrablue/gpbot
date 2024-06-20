@@ -1,0 +1,34 @@
+{
+  "irc": {
+    "network": "irc.libera.chat",
+    "user": "gpbot-test",
+    "channels": {
+      "#gpbot": {
+        "review": true,
+        "gpt": true
+      }
+    }
+  },
+  "openai": {
+    "api_key": "sk-your-api-key",
+    "completion": {
+      "max_tokens": 100,
+      "model": "gpt-3.5-turbo",
+      "temperature": 0.5
+    },
+    "review": {
+      "max_tokens": 100,
+      "model": "gpt-3.5-turbo",
+      "temperature": 0.5
+    }
+  },
+  "baseuri": "https://gpbot.org",
+  "github": {
+    "terrablue/gpbot": {
+      "color": "8",
+      "secret": "your-webhook-secret",
+      "channels": ["#gpbot-test"],
+      "branches": ["master"]
+    }
+  }
+}
