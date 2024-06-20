@@ -6,6 +6,6 @@ WORKDIR /app
 
 COPY run.sh /app
 
-RUN npm i --prefix /app ts-node
+RUN npm i --prefix /app ts-node@9
 
 CMD ["bash", "run.sh"]
