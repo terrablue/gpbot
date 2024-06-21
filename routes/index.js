@@ -1,9 +1,9 @@
-import { File } from "rcompat/fs";
+import { file } from "rcompat/fs";
 import crypto from "rcompat/crypto";
-import { Response, Status } from "rcompat/http";
+import { Status } from "rcompat/http";
 import { valmap, from, to } from "rcompat/object";
 
-const conf = await new File(import.meta.url).up(3).join("conf.json").json();
+const conf = await file(import.meta.url).up(3).join("conf.json").json();
 const encoder = new TextEncoder("utf-8");
 const encode = what => encoder.encode(what);
 const hash = "SHA-256";

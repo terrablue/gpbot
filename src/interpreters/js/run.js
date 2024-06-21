@@ -6,7 +6,7 @@ export const ok = {
 const last = -1;
 export const err = {
   source: "stderr",
-  output: lines => lines.at(last),
+  output: lines => lines.at(last - 1),
 };
 
 export const sanitize = input => JSON.stringify(input

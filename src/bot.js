@@ -1,10 +1,10 @@
-import { File } from "rcompat/fs";
+import { file } from "rcompat/fs";
 import irc_udp from "irc-upd";
 import run from "./run.js";
 import gpt from "./gpt.js";
 import review from "./review.js";
 import explain from "./explain.js";
-const conf = await new File(import.meta.url).up(2).join("conf.json").json();
+const conf = await file(import.meta.url).up(2).join("conf.json").json();
 
 const { irc, openai } = conf;
 const { channels } = irc;

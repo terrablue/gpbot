@@ -1,7 +1,7 @@
-import { File } from "rcompat/fs";
+import { resolve } from "rcompat/fs";
 import { execSync } from "node:child_process";
 
-const interpreters = File.resolve().join("src", "interpreters");
+const interpreters = resolve().join("src", "interpreters");
 
 const command = "docker";
 // make sure the latest superarch/minarch image is pulled

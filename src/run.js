@@ -1,8 +1,8 @@
-import { File } from "rcompat/fs";
+import { file } from "rcompat/fs";
 import { run } from "./docker.js";
 import languages from "./languages.js";
 
-const interpreters = new File(import.meta.url).up(1).join("interpreters");
+const interpreters = file(import.meta.url).up(1).join("interpreters");
 
 const format = ({ source, output }, result) =>
   output(result[source].toString().split("\n").filter(l => l !== ""));
