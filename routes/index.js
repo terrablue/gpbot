@@ -1,7 +1,7 @@
 import { file } from "rcompat/fs";
 import crypto from "rcompat/crypto";
 import { Status } from "rcompat/http";
-import { valmap, from, to } from "rcompat/object";
+import { valmap } from "rcompat/object";
 
 const conf = await file(import.meta.url).up(3).join("conf.json").json();
 const encoder = new TextEncoder("utf-8");
@@ -10,9 +10,10 @@ const hash = "SHA-256";
 const algorithm = { name: "HMAC", hash };
 
 const secrets = valmap(conf.github, ({ secret }) => secret);
-const keys = from(await Promise.all(to(secrets).map(async ([key, value]) =>
-  [key, await crypto.subtle.importKey("raw", encode(value), algorithm, false,
-    ["verify"])])));
+const keys = Object.fromEntries(await Promise.all(Object.entries(secrets)
+  .map(async ([key, value]) =>
+    [key, await crypto.subtle.importKey("raw", encode(value), algorithm, false,
+      ["verify"])])));
 const channels = valmap(conf.github, ({ channels }) => channels);
 const colors = valmap(conf.github, ({ color }) => color);
 const branches = valmap(conf.github, ({ branches }) => branches);
@@ -50,7 +51,8 @@ const events = {
   push({ commits, ref }, Link, repository) {
     const branch = ref.split("/").at(-1);
     const repository_branches = branches[repository];
-    if (repository_branches !== undefined && !repository_branches.includes(branch)) {
+    if (repository_branches !== undefined
+      && !repository_branches.includes(branch)) {
       return [];
     }
     const $branch = grey(branch);
