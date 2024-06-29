@@ -1,4 +1,5 @@
-import bot from "./src/bot.js";
+import irc from "./src/irc.js";
+import discord from "./src/discord.js";
 import { default as store, sqlite } from "@primate/store";
 
 export default {
@@ -8,15 +9,19 @@ export default {
   modules: [
     store({ driver: sqlite({ filename: "data.db" }) }),
     (_ => {
-      let client;
+      const clients = {};
       return {
         name: "bot",
         init(app, next) {
-          client = bot();
+          clients.irc = irc();
+          clients.discord = discord();
           return next(app);
         },
         route(request, next) {
-          return next({ ...request, say: (...args) => client.say(...args) });
+          return next({ ...request, say: (channel, message) => {
+            clients.irc.say(channel, message);
+            clients.discord.say(message);
+          } });
         },
       };
     })(),
